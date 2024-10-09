@@ -35,11 +35,25 @@ class Debug {
     }
 }
 
+class Timer {
+    constructor() {
+        this.counter = 0;
+        this.interval;
+    }
+    startCounter() {
+        this.interval = setInterval((_) => { self.counter += 100; }, 100);
+    }
+    stopCounter() {
+        clearInterval(this.interval);
+    }
+}
+
 class Paragraph {
     constructor(paragraph) {
         this.paragraph = [];
         this.paragraphText = paragraph;
         this.pointer = 0;
+        this.timer = new Timer();
         this.errors = 0;
         this.debug = new Debug();
         this.debug.modifyCounter(this.pointer);
@@ -56,6 +70,7 @@ class Paragraph {
     }
 
     checkKey(event) {
+        this.timer.startCounter();
         if (event.key === this.paragraphText[this.pointer] && event.key != 'Shift') {
             this.paragraph[this.pointer].classList.add('typed');
             this.incrementPointer();
@@ -68,6 +83,9 @@ class Paragraph {
             this.decrementPointer();
             this.retreatActiveKey();
             this.debug.modifyCounter(this.pointer);
+        } else if (this.pointer === this.paragraph.length - 2) {
+            this.timer.stopCounter();
+            console.log(this.timer.counter);
         }
         else {
             this.activateFalseKey();
