@@ -41,10 +41,15 @@ class Timer {
         this.interval;
     }
     startCounter() {
-        this.interval = setInterval((_) => { self.counter += 100; }, 100);
+        this.interval = setInterval((_) => { this.counter += 100; }, 100);
     }
     stopCounter() {
         clearInterval(this.interval);
+    }
+    calculateWPM(wordCount) {
+        const counterInMin = this.counter / 1000 / 60;
+        const wpm = wordCount / counterInMin;
+        return wpm;
     }
 }
 
@@ -52,6 +57,7 @@ class Paragraph {
     constructor(paragraph) {
         this.paragraph = [];
         this.paragraphText = paragraph;
+        this.wordCount = this.countWords();
         this.pointer = 0;
         this.timer = new Timer();
         this.errors = 0;
@@ -61,6 +67,7 @@ class Paragraph {
             const charElement = new Character(char);
             this.paragraph.push(charElement.getElement());
         }
+
         this.debug.modifyClassesText(this.paragraph[this.pointer].classList);
         this.paragraph[this.pointer].classList.add('active');
     }
@@ -70,14 +77,20 @@ class Paragraph {
     }
 
     checkKey(event) {
-        this.timer.startCounter();
+        if (this.pointer == 0) {
+            this.timer.startCounter();
+        }
+        console.log(this.countWords() / this.timer.counter*60*1000);
         if (event.key === this.paragraphText[this.pointer] && event.key != 'Shift') {
             this.paragraph[this.pointer].classList.add('typed');
             this.incrementPointer();
             this.advanceActiveKey();
-            console.log(this.paragraph[this.pointer]);
+            // console.log(this.paragraph[this.pointer]);
             this.debug.modifyCounter(this.pointer);
-            this.debug.modifyClassesText(this.paragraph[this.pointer].classList);
+
+            if (this.pointer < this.paragraph.length) {
+                this.debug.modifyClassesText(this.paragraph[this.pointer].classList);
+            }
         }
         else if (event.key === 'Backspace') {
             this.decrementPointer();
@@ -85,7 +98,7 @@ class Paragraph {
             this.debug.modifyCounter(this.pointer);
         } else if (this.pointer === this.paragraph.length - 2) {
             this.timer.stopCounter();
-            console.log(this.timer.counter);
+            console.log(this.timer.calculateWPM(this.wordCount));
         }
         else {
             this.activateFalseKey();
@@ -102,7 +115,9 @@ class Paragraph {
         this.pointer += 1;
     }
     advanceActiveKey() {
-        this.paragraph[this.pointer].classList.add('active');
+        if (this.pointer < this.paragraph.length) {
+            this.paragraph[this.pointer].classList.add('active');
+        }
         if (this.pointer >= 0) {
             this.paragraph[this.pointer - 1].classList.remove('active');
         }
@@ -119,6 +134,10 @@ class Paragraph {
     incrementErrorCount() {
         this.errors += 1;
     }
+
+    countWords() {
+        return this.paragraphText.slice(0, this.pointer).split(' ').length - 1;
+    }
 }
 
 class Page {
@@ -134,7 +153,7 @@ class Page {
     addEventListeners(paragraph) {
         document.body.addEventListener('keydown', event => {
             paragraph.checkKey(event);
-            console.log(event.key);
+            // console.log(event.key);
         });
     }
 }
