@@ -2,7 +2,7 @@ class Character {
     constructor(char) {
         this.char = document.createElement('span');
         this.char.textContent = char;
-        this.char.classList.add('char', 'waiting-char');
+        this.char.classList.add('char');
     }
     getElement() {
         return this.char;
@@ -25,9 +25,13 @@ class Character {
 class Debug {
     constructor() {
         this.pointerCounter = document.querySelector('.pointer-counter');
+        this.currentClasses = document.querySelector('.current-classes');
     }
-    modifyCounter(number){
-        this.pointerCounter.textContent += ` ${number}`;
+    modifyClassesText(classes) {
+        this.currentClasses.textContent = `${classes}`;
+    }
+    modifyCounter(number) {
+        this.pointerCounter.textContent = `Pointer: ${number}`;
     }
 }
 
@@ -37,10 +41,14 @@ class Paragraph {
         this.paragraphText = paragraph;
         this.pointer = 0;
         this.errors = 0;
+        this.debug = new Debug();
+        this.debug.modifyCounter(this.pointer);
         for (const char of paragraph) {
             const charElement = new Character(char);
             this.paragraph.push(charElement.getElement());
         }
+        this.debug.modifyClassesText(this.paragraph[this.pointer].classList);
+        this.paragraph[this.pointer].classList.add('active');
     }
     getElement() {
         console.log(this.paragraph);
@@ -53,14 +61,20 @@ class Paragraph {
             this.incrementPointer();
             this.advanceActiveKey();
             console.log(this.paragraph[this.pointer]);
-        } else if (event.key === 'Backspace'){
+            this.debug.modifyCounter(this.pointer);
+            this.debug.modifyClassesText(this.paragraph[this.pointer].classList);
+        }
+        else if (event.key === 'Backspace') {
             this.decrementPointer();
             this.retreatActiveKey();
-        } else {
+            this.debug.modifyCounter(this.pointer);
+        }
+        else {
             this.activateFalseKey();
             this.incrementPointer();
             this.advanceActiveKey();
             this.incrementErrorCount();
+            this.debug.modifyCounter(this.pointer);
         }
     }
     decrementPointer() {
@@ -70,13 +84,16 @@ class Paragraph {
         this.pointer += 1;
     }
     advanceActiveKey() {
-        this.paragraph[this.pointer].classList.toggle('active');
+        this.paragraph[this.pointer].classList.add('active');
         if (this.pointer >= 0) {
-            this.paragraph[this.pointer - 1].classList.toggle('active');
+            this.paragraph[this.pointer - 1].classList.remove('active');
         }
     }
     retreatActiveKey() {
-        this.paragraph[this.pointer - 1].classList.remove('false');
+        this.paragraph[this.pointer].classList.remove('false');
+        this.paragraph[this.pointer].classList.remove('typed');
+        this.paragraph[this.pointer + 1].classList.remove('active');
+        this.paragraph[this.pointer].classList.add('active');
     }
     activateFalseKey() {
         this.paragraph[this.pointer].classList.add('false');

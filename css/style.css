@@ -38,6 +38,9 @@ body {
     text-align: center;
 }
 
+.char {
+    color: var(--color);
+}
 .char.active {
     text-decoration: underline;
 }
