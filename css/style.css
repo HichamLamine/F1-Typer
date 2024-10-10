@@ -41,10 +41,10 @@ body {
 .char {
     color: var(--color);
 }
-.char.active {
+.char.highlighted {
     text-decoration: underline;
 }
-.char.false {
+.char.wrong {
     color: var(--error-color);
 }
 .char.typed {
