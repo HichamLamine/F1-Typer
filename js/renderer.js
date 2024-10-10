@@ -5,6 +5,7 @@ export class Renderer {
         this.debug = debug;
 
         this.populateInputField();
+        this.inputField.children[0].classList.add('highlighted');
 
         this.debug.modifyCounter(this.paragraph.getPointer());
         this.debug.modifyClassesText(this.inputField.children[this.paragraph.getPointer()].classList);

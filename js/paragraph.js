@@ -34,6 +34,22 @@ export class Paragraph {
         this.pointer = newPointer;
     }
 
+    countWords() {
+        return this.paragraphText.split(' ').length - 1;
+    }
+
+    countChars() {
+        return this.paragraphText.length;
+    }
+
+    incrementPointer() {
+        this.pointer = this.pointer < this.countChars() - 1? this.pointer + 1: this.pointer;
+    }
+
+    decrementPointer() {
+        this.pointer = this.pointer > 0 ? this.pointer - 1: this.pointer;
+    }
+
     // checkKey(event) {
     //     if (this.pointer == 0) {
     //         this.timer.startCounter();
