@@ -12,6 +12,7 @@
     --primary-color: #e79cfe;
     --secondary-color: #b876cc;
     --error-color: #ff6b6b;
+    --error-bg: #6a3131;
     --color: #fff;
 }
 
@@ -37,7 +38,8 @@ body {
 }
 
 .pointer-counter,
-.errors-counter {
+.errors-counter,
+.current-wpm {
     padding: 0.5em;
     text-align: center;
 }
@@ -52,6 +54,7 @@ body {
 
 .char.wrong {
     color: var(--error-color);
+    background-color: var(--error-bg);
 }
 
 .char.typed {
@@ -114,11 +117,13 @@ body {
 .accuracy-overlay h2,
 .errors-overlay h2 {
     display: inline;
+    font-weight: 500;
 }
 
 .duration-overlay-header,
 .accuracy-overlay-header,
 .errors-overlay-header {
+    color: var(--primary-color);
     display: flex;
     gap: 5px;
     justify-content: center;

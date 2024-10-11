@@ -2,15 +2,21 @@ export class EventHandler {
     constructor(paragraph, renderer) {
         this.paragraph = paragraph;
         this.renderer = renderer;
+        this.testCompleted = false;
     }
 
     addEventListeners() {
         document.body.addEventListener('keydown', event => {
+            if (this.testCompleted) {
+                return;
+            }
             // Start the timer upon first key hit
             if (this.paragraph.pointer == 0) {
                 this.paragraph.timer.startCounter();
-                console.log(this.paragraph.countWords());
+                // console.log(this.paragraph.countWords());
             }
+            this.renderer.debug.logWPM(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
+            console.log(`${this.paragraph.countWords()} / ${this.paragraph.timer.getElapsedTime()}`);
 
             // Handle typing key events
             if (event.key === 'Backspace') {
@@ -24,14 +30,12 @@ export class EventHandler {
 
             // Stop the timer when the last char is hit
             if (this.paragraph.getPointer() + 1 === this.paragraph.countChars()) {
-                this.paragraph.timer.stopCounter();
-                this.renderer.updateOverlayValues();
-                this.renderer.toggleOverlay();
+                // this.renderer.toggleOverlay();
                 console.log(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
             }
-            this.renderer.debug.modifyCounter(this.paragraph.getPointer());
-            this.renderer.debug.modifyErrorCounter(this.paragraph.getErrorCount());
-            this.renderer.debug.modifyClassesText(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
+            this.renderer.debug.logCounter(this.paragraph.getPointer());
+            this.renderer.debug.logErrors(this.paragraph.getErrorCount());
+            this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
         });
     }
 
@@ -44,7 +48,15 @@ export class EventHandler {
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(pointer), pointer);
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(nextPointer), nextPointer);
 
+        // check if the char got rectified to decrement the error count
         this.paragraph.checkChar(pointer);
+
+        if (this.paragraph.getPointer() === this.paragraph.countChars() - 1) {
+            this.paragraph.timer.stopCounter();
+            this.renderer.updateOverlayValues();
+            this.renderer.toggleOverlay();
+            this.testCompleted = true;
+        }
 
         this.paragraph.incrementPointer();
     }

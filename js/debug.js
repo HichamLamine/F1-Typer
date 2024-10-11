@@ -3,14 +3,18 @@ export class Debug {
         this.pointerCounter = document.querySelector('.pointer-counter');
         this.errorsCounter = document.querySelector('.errors-counter');
         this.currentClasses = document.querySelector('.current-classes');
+        this.currentWPM = document.querySelector('.current-wpm');
     }
-    modifyClassesText(classes) {
+    logClasses(classes) {
         this.currentClasses.textContent = `${classes}`;
     }
-    modifyCounter(number) {
+    logCounter(number) {
         this.pointerCounter.textContent = `Pointer: ${number}`;
     }
-    modifyErrorCounter(number) {
+    logErrors(number) {
         this.errorsCounter.textContent = `Errors: ${number}`;
+    }
+    logWPM(wpm) {
+        this.currentWPM.textContent = `WPM: ${wpm}`;
     }
 }

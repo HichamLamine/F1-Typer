@@ -55,7 +55,7 @@ export class Paragraph {
     }
 
     countWords() {
-        return this.paragraphText.split(' ').length;
+        return this.paragraphText.slice(0, this.pointer).split(' ').length;
     }
 
     countChars() {

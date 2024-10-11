@@ -17,9 +17,9 @@ export class Renderer {
         this.populateInputField();
         this.inputField.children[0].classList.add('highlighted');
 
-        this.debug.modifyCounter(this.paragraph.getPointer());
-        this.debug.modifyErrorCounter(this.paragraph.getErrorCount());
-        this.debug.modifyClassesText(this.inputField.children[this.paragraph.getPointer()].classList);
+        this.debug.logCounter(this.paragraph.getPointer());
+        this.debug.logErrors(this.paragraph.getErrorCount());
+        this.debug.logClasses(this.inputField.children[this.paragraph.getPointer()].classList);
     }
 
     renderCharacter(char) {
@@ -38,7 +38,7 @@ export class Renderer {
         const charSpan = this.inputField.children[pointer];
         charSpan.classList.remove('highlighted', 'typed', 'wrong');
         charObject.getState().split(', ').forEach(state => {
-            console.log(state)
+            // console.log(state)
             charSpan.classList.add(state);
         });
     }

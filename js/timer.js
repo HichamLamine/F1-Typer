@@ -9,13 +9,13 @@ export class Timer {
     startCounter() {
         // this.interval = setInterval((_) => { this.counter += 100; }, 100);
         this.startTime = Date.now();
-        console.log(this.startTime);
     }
     stopCounter() {
         // clearInterval(this.interval);
         this.endTime = Date.now();
     }
     getElapsedTime() {
+        this.stopCounter();
         this.elapsedTime = (this.endTime - this.startTime) / 1000;
         return this.elapsedTime;
     }
