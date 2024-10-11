@@ -4,10 +4,21 @@ export class Renderer {
         this.paragraph = paragraph;
         this.debug = debug;
 
+        this.overlay = document.querySelector('.overlay');
+        this.resultOverlay = document.querySelector('.result-overlay');
+        this.wpmOverlay = document.querySelector('.wpm-overlay-value');
+        this.durationOverlay = document.querySelector('.duration-overlay-value');
+        this.accuracyOverlay = document.querySelector('.accuracy-overlay-value');
+        this.errorsOverlay = document.querySelector('.errors-overlay-value');
+
+        this.toggleAppearance(this.overlay, 'block');
+        this.toggleAppearance(this.resultOverlay, 'grid');
+
         this.populateInputField();
         this.inputField.children[0].classList.add('highlighted');
 
         this.debug.modifyCounter(this.paragraph.getPointer());
+        this.debug.modifyErrorCounter(this.paragraph.getErrorCount());
         this.debug.modifyClassesText(this.inputField.children[this.paragraph.getPointer()].classList);
     }
 
@@ -30,5 +41,20 @@ export class Renderer {
             console.log(state)
             charSpan.classList.add(state);
         });
+    }
+
+    toggleAppearance(element, display) {
+        element.style.display = element.style.display === 'none' ? display : 'none';
+    }
+
+    updateOverlayValues() {
+        this.wpmOverlay.textContent = `${this.paragraph.timer.calculateWPM(this.paragraph.countWords()).toFixed(0)}WPM`;
+        this.durationOverlay.textContent = this.paragraph.timer.getReadableDuration();
+        this.accuracyOverlay.textContent = `${this.paragraph.calculateAccuracy()}%`;
+        this.errorsOverlay.textContent = this.paragraph.getErrorCount();
+    }
+    toggleOverlay() {
+        this.toggleAppearance(this.overlay, 'block');
+        this.toggleAppearance(this.resultOverlay, 'grid');
     }
 }

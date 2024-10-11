@@ -6,9 +6,6 @@ export class Character {
             typed : false,
             wrong : false,
         };
-        // this.char = document.createElement('span');
-        // this.char.textContent = char;
-        // this.char.classList.add('char');
     }
     setState(newState) {
         Object.assign(this.state, newState);

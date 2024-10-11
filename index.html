@@ -1,23 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>F1-Typer</title>
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <header class="main-header">
-            <h1 class="header-text">F1 TYPER</h1>
-        </header>
 
-        <section>
-            <div class="typing-field">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>F1-Typer</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="main-header">
+        <h1 class="header-text">F1 TYPER</h1>
+    </header>
+
+    <section>
+        <div class="typing-field"></div>
+        <h1 class="pointer-counter">Pointer: </h1>
+        <h1 class="errors-counter">Errors: </h1>
+        <h1 class="current-classes"></h1>
+
+        <div class="overlay"></div>
+        <div class="result-overlay">
+            <h1 class="wpm-score-overlay">You Scored <span class="wpm-overlay-value">71 WPM</span> !</h1>
+            <div class="duration-overlay">
+                <div class="duration-overlay-header">
+                    <span class="material-icons">schedule</span>
+                    <h2>Duration</h2>
+                </div>
+                <h1 class="duration-overlay-value">12s</h1>
             </div>
-            <h1 class="pointer-counter">Pointer: </h1>
-            <h1 class="current-classes"></h1>
-        </section>
-    
-        <script type="module" src="js/main.js"></script>
-    </body>
+            <div class="accuracy-overlay">
+                <div class="accuracy-overlay-header">
+                    <span class="material-icons">location_searching</span>
+                    <h2>Accuracy</h2>
+                    </div>
+                <h1 class="accuracy-overlay-value">92%</h1>
+            </div>
+            <div class="errors-overlay">
+                <div class="errors-overlay-header">
+                    <span class="material-icons">error</span>
+                    <h2>Errors</h2>
+                </div>
+                <h1 class="errors-overlay-value">3</h1>
+            </div>
+
+            <div class="overlay-actions-container">
+                <button class="restart-btn">
+                    <span class="material-icons">refresh</span>
+                </button>
+                <button class="next-btn">
+                    <span class="material-icons">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+
 </html>

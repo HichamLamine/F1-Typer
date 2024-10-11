@@ -6,9 +6,14 @@ export class EventHandler {
 
     addEventListeners() {
         document.body.addEventListener('keydown', event => {
-            if (this.paragraph.getPointer() >= this.paragraph.countChars() - 1) {
-                console.log('finished');
-            } else if (event.key === 'Backspace') {
+            // Start the timer upon first key hit
+            if (this.paragraph.pointer == 0) {
+                this.paragraph.timer.startCounter();
+                console.log(this.paragraph.countWords());
+            }
+
+            // Handle typing key events
+            if (event.key === 'Backspace') {
                 this.handleBackspaceKey();
             }
             else if (event.key === this.paragraph.getChar(this.paragraph.getPointer())) {
@@ -16,7 +21,16 @@ export class EventHandler {
             } else {
                 this.handleWrongKey();
             }
+
+            // Stop the timer when the last char is hit
+            if (this.paragraph.getPointer() + 1 === this.paragraph.countChars()) {
+                this.paragraph.timer.stopCounter();
+                this.renderer.updateOverlayValues();
+                this.renderer.toggleOverlay();
+                console.log(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
+            }
             this.renderer.debug.modifyCounter(this.paragraph.getPointer());
+            this.renderer.debug.modifyErrorCounter(this.paragraph.getErrorCount());
             this.renderer.debug.modifyClassesText(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
         });
     }
@@ -30,6 +44,8 @@ export class EventHandler {
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(pointer), pointer);
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(nextPointer), nextPointer);
 
+        this.paragraph.checkChar(pointer);
+
         this.paragraph.incrementPointer();
     }
 
@@ -42,6 +58,8 @@ export class EventHandler {
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(pointer), pointer);
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(nextPointer), nextPointer);
 
+        const wrongChar = this.paragraph.getChar(pointer);
+        this.paragraph.pushError(pointer, wrongChar);
         this.paragraph.incrementPointer();
     }
 

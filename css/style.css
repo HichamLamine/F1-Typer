@@ -1,11 +1,14 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
 }
 
 :root {
     --primary-bg: #1e1e1e;
     --secondary-bg: #343436;
+    --overlay-bg: #404042;
     --primary-color: #e79cfe;
     --secondary-color: #b876cc;
     --error-color: #ff6b6b;
@@ -33,20 +36,108 @@ body {
 
 }
 
-.pointer-counter {
-    padding: 1em;
+.pointer-counter,
+.errors-counter {
+    padding: 0.5em;
     text-align: center;
 }
 
 .char {
     color: var(--color);
 }
+
 .char.highlighted {
     text-decoration: underline;
 }
+
 .char.wrong {
     color: var(--error-color);
 }
+
 .char.typed {
     color: green;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+}
+
+.result-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(70%, 600px);
+    background-color: var(--secondary-bg);
+    z-index: 2;
+    padding: 10px;
+    border-radius: 20px;
+    display: none;
+    grid-template-rows: 80px 100px 100px;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
+}
+
+.wpm-score-overlay {
+    text-align: center;
+    align-self: center;
+    grid-column: span 3;
+}
+
+.wpm-overlay-value {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.duration-overlay,
+.accuracy-overlay,
+.errors-overlay {
+    text-align: center;
+    align-self: center;
+    box-shadow: 1px 1px 2px var(--primary-bg);
+    padding: 1em;
+    border-radius: 20px;
+    background-color: var(--overlay-bg);
+}
+
+.duration-overlay h2,
+.accuracy-overlay h2,
+.errors-overlay h2 {
+    display: inline;
+}
+
+.duration-overlay-header,
+.accuracy-overlay-header,
+.errors-overlay-header {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-actions-container {
+    grid-column: 2 / 3;
+    align-self: center;
+    justify-self: center;
+    box-shadow: 1px 1px 2px var(--primary-bg);
+    padding: 0.8em;
+    border-radius: 20px;
+    background-color: var(--overlay-bg);
+}
+
+.restart-btn,
+.next-btn {
+    background-color: var(--overlay-bg);
+    border-width: 0;
+    color: var(--color);
 }

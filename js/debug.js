@@ -1,6 +1,7 @@
 export class Debug {
     constructor() {
         this.pointerCounter = document.querySelector('.pointer-counter');
+        this.errorsCounter = document.querySelector('.errors-counter');
         this.currentClasses = document.querySelector('.current-classes');
     }
     modifyClassesText(classes) {
@@ -8,5 +9,8 @@ export class Debug {
     }
     modifyCounter(number) {
         this.pointerCounter.textContent = `Pointer: ${number}`;
+    }
+    modifyErrorCounter(number) {
+        this.errorsCounter.textContent = `Errors: ${number}`;
     }
 }
