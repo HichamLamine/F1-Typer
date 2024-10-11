@@ -22,6 +22,12 @@ export class Renderer {
         this.debug.logClasses(this.inputField.children[this.paragraph.getPointer()].classList);
     }
 
+    updateParagraph(paragraph) {
+        this.paragraph = paragraph;
+        this.inputField.innerHTML = '';
+        this.populateInputField();
+    }
+
     renderCharacter(char) {
         const span = document.createElement('span');
         span.textContent = char;

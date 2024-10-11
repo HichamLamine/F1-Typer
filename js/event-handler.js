@@ -1,11 +1,19 @@
+import { Paragraph } from "./paragraph.js";
+
 export class EventHandler {
-    constructor(paragraph, renderer) {
+    constructor(paragraph, renderer, wordProvider) {
         this.paragraph = paragraph;
         this.renderer = renderer;
+        this.wordProvider = wordProvider;
+        this.nextBtn = document.querySelector('.next-btn');
         this.testCompleted = false;
     }
 
     addEventListeners() {
+        this.nextBtn.addEventListener('click', event => {
+            this.resetTest();
+        });
+
         document.body.addEventListener('keydown', event => {
             if (this.testCompleted) {
                 return;
@@ -16,7 +24,7 @@ export class EventHandler {
                 // console.log(this.paragraph.countWords());
             }
             this.renderer.debug.logWPM(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
-            console.log(`${this.paragraph.countWords()} / ${this.paragraph.timer.getElapsedTime()}`);
+            // console.log(`${this.paragraph.countWords()} / ${this.paragraph.timer.getElapsedTime()}`);
 
             // Handle typing key events
             if (event.key === 'Backspace') {
@@ -84,6 +92,16 @@ export class EventHandler {
         this.renderer.updateCharacterClassList(this.paragraph.getCharObject(previousPointer), previousPointer);
 
         this.paragraph.decrementPointer();
+    }
+
+    resetTest() {
+        const wordsArray = this.wordProvider.getWords(25, 200);
+        // const timer = new Timer();
+        this.paragraph = new Paragraph(wordsArray, this.paragraph.timer);
+        this.testCompleted = false;
+        // const debug = new Debug();
+        this.renderer.updateParagraph(this.paragraph);
+        this.renderer.toggleOverlay();
     }
 
 }

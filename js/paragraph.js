@@ -1,15 +1,16 @@
 import { Character } from './character.js';
 
 export class Paragraph {
-    constructor(typingText, timer) {
+    constructor(wordsArray, timer) {
         this.paragraph = [];
-        this.paragraphText = typingText.trim();
+        this.wordsArray = wordsArray;
+        this.paragraphText = this.wordsArray.join(' ');
         // this.wordCount = this.countWords();
         this.pointer = 0;
         this.timer = timer;
         this.errorCount = 0;
         this.errors = [];
-        for (const char of typingText) {
+        for (const char of this.paragraphText) {
             const character = new Character(char);
             this.paragraph.push(character);
         }
