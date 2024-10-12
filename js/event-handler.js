@@ -6,12 +6,16 @@ export class EventHandler {
         this.renderer = renderer;
         this.wordProvider = wordProvider;
         this.nextBtn = document.querySelector('.next-btn');
+        this.restartBtn = document.querySelector('.restart-btn');
         this.testCompleted = false;
     }
 
     addEventListeners() {
         this.nextBtn.addEventListener('click', event => {
-            this.resetTest();
+            this.resetTest({repeat: false});
+        });
+        this.restartBtn.addEventListener('click', event => {
+            this.resetTest({repeat: true});
         });
 
         document.body.addEventListener('keydown', event => {
@@ -23,7 +27,12 @@ export class EventHandler {
                 this.paragraph.timer.startCounter();
                 // console.log(this.paragraph.countWords());
             }
-            this.renderer.debug.logWPM(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
+
+            // Update the wpm indicator on each word to avoid distraction
+            if (event.code == 'Space') {
+                this.renderer.updateCurrentWpm();
+            }
+            this.renderer.updateWordsTyped();
             // console.log(`${this.paragraph.countWords()} / ${this.paragraph.timer.getElapsedTime()}`);
 
             // Handle typing key events
@@ -38,10 +47,8 @@ export class EventHandler {
 
             // Stop the timer when the last char is hit
             if (this.paragraph.getPointer() + 1 === this.paragraph.countChars()) {
-                // this.renderer.toggleOverlay();
                 console.log(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
             }
-            this.renderer.debug.logCounter(this.paragraph.getPointer());
             this.renderer.debug.logErrors(this.paragraph.getErrorCount());
             this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
         });
@@ -80,6 +87,14 @@ export class EventHandler {
 
         const wrongChar = this.paragraph.getChar(pointer);
         this.paragraph.pushError(pointer, wrongChar);
+
+        if (this.paragraph.getPointer() === this.paragraph.countChars() - 1) {
+            this.paragraph.timer.stopCounter();
+            this.renderer.updateOverlayValues();
+            this.renderer.toggleOverlay();
+            this.testCompleted = true;
+        }
+
         this.paragraph.incrementPointer();
     }
 
@@ -94,8 +109,14 @@ export class EventHandler {
         this.paragraph.decrementPointer();
     }
 
-    resetTest() {
-        const wordsArray = this.wordProvider.getWords(25, 200);
+    resetTest(option) {
+        let wordsArray = [];
+
+        if (option.repeat) {
+            wordsArray = this.paragraph.wordsArray;
+        } else {
+            wordsArray = this.wordProvider.getWords(25, 200);
+        }
         // const timer = new Timer();
         this.paragraph = new Paragraph(wordsArray, this.paragraph.timer);
         this.testCompleted = false;

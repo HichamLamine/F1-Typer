@@ -11,6 +11,9 @@ export class Renderer {
         this.accuracyOverlay = document.querySelector('.accuracy-overlay-value');
         this.errorsOverlay = document.querySelector('.errors-overlay-value');
 
+        this.currentWpmElement = document.querySelector('.current-wpm-text');
+        this.wordsTypedElement = document.querySelector('.words-typed-text');
+
         this.toggleAppearance(this.overlay, 'block');
         this.toggleAppearance(this.resultOverlay, 'grid');
 
@@ -26,6 +29,14 @@ export class Renderer {
         this.paragraph = paragraph;
         this.inputField.innerHTML = '';
         this.populateInputField();
+    }
+
+    updateCurrentWpm() {
+        this.currentWpmElement.innerHTML = `<span>WPM: </span>${this.paragraph.calculateWpm().toFixed(0)}`;
+    }
+
+    updateWordsTyped() {
+        this.wordsTypedElement.innerHTML = `${this.paragraph.countWords(this.paragraph.getPointer())}<span>/</span>${this.paragraph.countWords(this.paragraph.countChars() - 1)}`;
     }
 
     renderCharacter(char) {
@@ -54,7 +65,7 @@ export class Renderer {
     }
 
     updateOverlayValues() {
-        this.wpmOverlay.textContent = `${this.paragraph.timer.calculateWPM(this.paragraph.countWords()).toFixed(0)}WPM`;
+        this.wpmOverlay.textContent = `${this.paragraph.calculateWpm().toFixed(0)}WPM`;
         this.durationOverlay.textContent = this.paragraph.timer.getReadableDuration();
         this.accuracyOverlay.textContent = `${this.paragraph.calculateAccuracy()}%`;
         this.errorsOverlay.textContent = this.paragraph.getErrorCount();

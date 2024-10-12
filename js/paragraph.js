@@ -6,6 +6,7 @@ export class Paragraph {
         this.wordsArray = wordsArray;
         this.paragraphText = this.wordsArray.join(' ');
         // this.wordCount = this.countWords();
+        this.currentWPM = 0;
         this.pointer = 0;
         this.timer = timer;
         this.errorCount = 0;
@@ -55,8 +56,8 @@ export class Paragraph {
         this.pointer = newPointer;
     }
 
-    countWords() {
-        return this.paragraphText.slice(0, this.pointer).split(' ').length;
+    countWords(index) {
+        return this.paragraphText.slice(0, index).split(' ').length;
     }
 
     countChars() {
@@ -75,8 +76,8 @@ export class Paragraph {
         this.pointer = this.pointer > 0 ? this.pointer - 1 : this.pointer;
     }
 
-    calculatewpm() {
-        this.timer.calculateWPM(this.countWords());
+    calculateWpm() {
+        return this.timer.calculateWPM(this.countWords(this.pointer));
     }
 }
 
