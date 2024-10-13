@@ -38,9 +38,9 @@ export class Renderer {
         this.populateInputField();
         this.inputField.children[0].classList.add('highlighted');
 
-        this.debug.logCounter(this.paragraph.getPointer());
-        this.debug.logErrors(this.paragraph.getErrorCount());
-        this.debug.logClasses(this.inputField.children[this.paragraph.getPointer()].classList);
+        // this.debug.logCounter(this.paragraph.getPointer());
+        // this.debug.logErrors(this.paragraph.getErrorCount());
+        // this.debug.logClasses(this.inputField.children[this.paragraph.getPointer()].classList);
     }
 
     updateParagraph(paragraph) {

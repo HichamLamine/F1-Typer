@@ -80,8 +80,8 @@ export class EventHandler {
             if (this.paragraph.getPointer() + 1 === this.paragraph.countChars()) {
                 console.log(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
             }
-            this.renderer.debug.logErrors(this.paragraph.getErrorCount());
-            this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
+            // this.renderer.debug.logErrors(this.paragraph.getErrorCount());
+            // this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
         });
     }
 
