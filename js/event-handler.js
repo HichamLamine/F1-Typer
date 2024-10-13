@@ -1,7 +1,8 @@
 import { Paragraph } from "./paragraph.js";
 
 export class EventHandler {
-    constructor(paragraph, renderer, wordProvider) {
+    constructor(paragraph, renderer, wordProvider, options) {
+        this.options = options;
         this.paragraph = paragraph;
         this.renderer = renderer;
         this.wordProvider = wordProvider;
@@ -11,11 +12,41 @@ export class EventHandler {
     }
 
     addEventListeners() {
+        this.renderer.selectMenus.forEach((selectMenu, index) => {
+            selectMenu.selectValue.addEventListener('click', event => {
+                this.renderer.toggleSelectMenu(selectMenu);
+            });
+            selectMenu.listItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    this.renderer.toggleSelectMenu(selectMenu);
+                    this.renderer.updateSelectValue(selectMenu, item.textContent);
+
+                    switch (index) {
+                        case 0:
+                            this.options.setFrequency(item.value);
+                            break;
+
+                        case 1:
+                            this.options.setTestType(item.value);
+                        break
+                        case 2:
+                            this.options.setWordCount(item.value);
+                        break
+                        default:
+                            break;
+                    }
+                    this.resetTest({ repeat: false });
+                });
+            });
+        });
+
         this.nextBtn.addEventListener('click', event => {
-            this.resetTest({repeat: false});
+            this.resetTest({ repeat: false });
+            this.renderer.toggleOverlay();
         });
         this.restartBtn.addEventListener('click', event => {
-            this.resetTest({repeat: true});
+            this.resetTest({ repeat: true });
+            this.renderer.toggleOverlay();
         });
 
         document.body.addEventListener('keydown', event => {
@@ -115,14 +146,13 @@ export class EventHandler {
         if (option.repeat) {
             wordsArray = this.paragraph.wordsArray;
         } else {
-            wordsArray = this.wordProvider.getWords(25, 200);
+            wordsArray = this.wordProvider.getWords(this.options.getWordCount({ string: false }), this.options.getFrequency({ string: false }));
         }
         // const timer = new Timer();
         this.paragraph = new Paragraph(wordsArray, this.paragraph.timer);
         this.testCompleted = false;
         // const debug = new Debug();
         this.renderer.updateParagraph(this.paragraph);
-        this.renderer.toggleOverlay();
     }
 
 }

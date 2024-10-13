@@ -14,6 +14,24 @@ export class Renderer {
         this.currentWpmElement = document.querySelector('.current-wpm-text');
         this.wordsTypedElement = document.querySelector('.words-typed-text');
 
+        this.selectMenus = [
+            {
+                selectValue: document.querySelector('.select-menu.frequency-select .select-value'),
+                optionsList: document.querySelector('.select-menu.frequency-select .options-list'),
+                listItems: document.querySelectorAll('.select-menu.frequency-select .options-list .option')
+            },
+            {
+                selectValue: document.querySelector('.select-menu.test-type-select .select-value'),
+                optionsList: document.querySelector('.select-menu.test-type-select .options-list'),
+                listItems: document.querySelectorAll('.select-menu.test-type-select .options-list .option')
+            },
+            {
+                selectValue: document.querySelector('.select-menu.word-count-select .select-value'),
+                optionsList: document.querySelector('.select-menu.word-count-select .options-list'),
+                listItems: document.querySelectorAll('.select-menu.word-count-select .options-list .option')
+            },
+        ];
+
         this.toggleAppearance(this.overlay, 'block');
         this.toggleAppearance(this.resultOverlay, 'grid');
 
@@ -73,5 +91,14 @@ export class Renderer {
     toggleOverlay() {
         this.toggleAppearance(this.overlay, 'block');
         this.toggleAppearance(this.resultOverlay, 'grid');
+    }
+
+    toggleSelectMenu(selectMenu) {
+        selectMenu.selectValue.classList.toggle('active');
+        selectMenu.optionsList.classList.toggle('active');
+    }
+
+    updateSelectValue(selectMenu, newSelectValue) {
+        selectMenu.selectValue.querySelector('span').textContent = newSelectValue;
     }
 }
