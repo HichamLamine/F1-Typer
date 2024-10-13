@@ -20,22 +20,6 @@
     </header>
 
     <section>
-        <div class="stats-container">
-            <div class="current-wpm">
-                <span class="material-icons">bolt</span>
-                <h3 class="current-wpm-text"><span>WPM: </span>0</h3>
-            </div>
-            <div class="words-typed">
-                <span class="material-icons">keyboard</span>
-                <h3 class="words-typed-text">0<span>/</span>25</h3>
-            </div>
-        </div>
-        <div class="typing-field"></div>
-        <h1 class="pointer-counter">Pointer: </h1>
-        <h1 class="errors-counter">Errors: </h1>
-        <!-- <h1 class="current-wpm">WPM: </h1> -->
-        <h1 class="current-classes"></h1>
-
         <div class="overlay"></div>
         <div class="result-overlay">
             <h1 class="wpm-score-overlay">You Scored <span class="wpm-overlay-value">71 WPM</span> !</h1>
@@ -72,6 +56,80 @@
                 </button>
             </div>
         </div>
+
+        <div class="options-container">
+            <div class="select-menu frequency-select">
+                <div class="select-value">
+                    <span>English 200</span>
+                    <span class="material-icons">keyboard_arrow_down</span>
+                </div>
+                <ul class="options-list">
+                    <li class="option" value="200">
+                        <span>English 200</span>
+                    </li>
+                    <li class="option" value="500">
+                        <span>English 500</span>
+                    </li>
+                    <li class="option" value="1000">
+                        <span>English 1k</span>
+                    </li>
+            </div>
+            <div class="select-menu test-type-select">
+                <div class="select-value">
+                    <span>Timer</span>
+                    <span class="material-icons">keyboard_arrow_down</span>
+                </div>
+                <ul class="options-list">
+                    <li class="option" value="Timer">
+                        <span>Timer</span>
+                    </li>
+                    <li class="option" value="Word count">
+                        <span>Word count</span>
+                    </li>
+            </div>
+            <div class="select-menu word-count-select">
+                <div class="select-value">
+                    <span>10 words</span>
+                    <span class="material-icons">keyboard_arrow_down</span>
+                </div>
+                <ul class="options-list">
+                    <li class="option" value="10">
+                        <span>10 words</span>
+                    </li>
+                    <li class="option" value="25">
+                        <span>25 words</span>
+                    </li>
+                    <li class="option" value="50">
+                        <span>50 words</span>
+                    </li>
+                    <li class="option" value="100">
+                        <span>100 words</span>
+                    </li>
+            </div>
+        </div>
+
+
+            <!-- <select class="test-duration-selct"> -->
+            <!--     <option value="15">15s</option> -->
+            <!--     <option value="30">30s</option> -->
+            <!--     <option value="60">60s</option> -->
+            <!-- </select> -->
+        <div class="stats-container">
+            <div class="current-wpm">
+                <span class="material-icons">bolt</span>
+                <h3 class="current-wpm-text"><span>WPM: </span>0</h3>
+            </div>
+            <div class="words-typed">
+                <span class="material-icons">keyboard</span>
+                <h3 class="words-typed-text">0<span>/</span>25</h3>
+            </div>
+        </div>
+        <div class="typing-field"></div>
+        <!-- <h1 class="pointer-counter">Pointer: </h1> -->
+        <!-- <h1 class="errors-counter">Errors: </h1> -->
+        <!-- <h1 class="current-wpm">WPM: </h1> -->
+        <!-- <h1 class="current-classes"></h1> -->
+
     </section>
 
     <script type="module" src="js/main.js"></script>

@@ -37,15 +37,16 @@ body {
     padding: 1em;
     font-size: 1.5rem;
     border-radius: 20px;
-
 }
 
+/* Debug elements */
 .pointer-counter,
 .errors-counter {
     padding: 0.5em;
     text-align: center;
 }
 
+/* Character styling based on state */
 .char {
     color: var(--seconday-fg);
 }
@@ -64,6 +65,7 @@ body {
     color: var(--primary-fg);
 }
 
+/* Blurred overlay for completed test info */
 .overlay {
     display: none;
     position: fixed;
@@ -79,6 +81,7 @@ body {
 }
 
 .result-overlay {
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -207,4 +210,80 @@ body {
 .words-typed {
     font-weight: 450;
     color: var(--primary-color);
+}
+
+.options-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.options-container select {
+    /* width: 100px; */
+    background-color: var(--secondary-bg);
+    padding: 0.3em;
+    border-radius: 20px;
+    color: var(--primary-fg);
+}
+.options-container select option {
+    border-radius: 20px;
+}
+
+.select-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1em;
+    align-items: center;
+}
+
+.select-menu .select-value {
+    display: flex;
+    user-select: none;
+    padding: 0.4em 0.6em;
+    border-radius: 20px;
+    background-color: var(--secondary-bg);
+    border: var(--overlay-bg) 2px solid;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    cursor: pointer;
+}
+
+.select-menu .select-value span.material-icons {
+    color: var(--primary-color);
+    transition: transform 300ms;
+}
+
+.select-menu .select-value.active span.material-icons {
+    transform: rotate(180deg);
+}
+
+.select-menu .options-list {
+    display: none;
+    position: absolute;
+    padding: 0.4em 0.6em;
+    border-radius: 20px;
+    background-color: var(--secondary-bg);
+    border: var(--overlay-bg) 2px solid;
+    box-shadow: 1px 1px 3px var(--primary-bg);
+    list-style: none;
+    line-height: 1.9em;
+    min-width: 130px;
+}
+
+.select-menu .options-list.active {
+    top: 124px;
+    display: block;
+}
+
+.select-menu .options-list .option {
+    user-select: none;
+    text-align: center;
+}
+
+.select-menu .options-list .option:hover {
+    color: var(--primary-color);
+    background-color: var(--overlay-btn-hover);
+    border-radius: 10px;
+    cursor: pointer;
 }
