@@ -34,6 +34,7 @@ body {
 .typing-field {
     background-color: var(--secondary-bg);
     max-width: min(70vw, 800px);
+    margin-bottom: 1em;
     padding: 1em;
     font-size: 1.5rem;
     border-radius: 20px;
@@ -49,10 +50,12 @@ body {
 /* Character styling based on state */
 .char {
     color: var(--secondary-fg);
+    transition: 1s text-decoration;
 }
 
 .char.highlighted {
-    text-decoration: underline var(--primary-color);
+    text-decoration: underline;
+    text-decoration-color: var(--primary-color);
 }
 
 .char.wrong {
@@ -306,4 +309,30 @@ body {
     background-color: var(--overlay-btn-hover);
     border-radius: 10px;
     cursor: pointer;
+}
+
+.shortcut-help-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.shortcut-help {
+    display: flex;
+    justify-content: center;
+    color: var(--secondary-fg);
+    align-items: center;
+}
+
+.shortcut-help .key {
+    background: var(--secondary-bg);
+    border-radius: 4px;
+    padding: 0.1em;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.shortcut-help .key .material-icons {
+    font-size: 1rem;
 }

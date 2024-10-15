@@ -54,6 +54,7 @@ export class Renderer {
         this.paragraph = paragraph;
         this.inputField.innerHTML = '';
         this.populateInputField();
+        this.inputField.children[0].classList.add('highlighted');
     }
 
     updateCurrentWpm() {

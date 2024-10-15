@@ -43,9 +43,8 @@ export class Timer {
         }, 1000);
     }
 
-    getCountdown() {
-        console.log(this.countdown);
-        return this.countdown;
+    stopCountdown() {
+        clearInterval(this.countdownId);
     }
 
     // getReadableTimer(option) {

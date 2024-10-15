@@ -34,6 +34,7 @@ export class EventHandler {
                             break
                         case 3:
                             this.options.setTestDuration(item.value);
+                            this.paragraph.timer.stopCountdown();
                             break
                         default:
                             break;
@@ -53,9 +54,18 @@ export class EventHandler {
         });
 
         document.body.addEventListener('keydown', event => {
-            if (this.options.testCompleted) {
-                return;
+            if (event.ctrlKey && event.code === 'ArrowRight') {
+                this.resetTest({repeat: false});
+            } else if (event.ctrlKey && event.code === 'ArrowLeft') {
+                this.resetTest({repeat: true});
             }
+
+                if (this.options.testCompleted || event.code == 'ControlLeft' || event.code === 'ArrowRight' || event.code === 'ArrowLeft') {
+                    return;
+                }
+
+            // make it so space changes wpm when actual pointer is in space not arbitrarily
+
             // Start the timer upon first key hit
             if (this.paragraph.pointer == 0 && this.options.getTestType() === 'Word count') {
                 this.paragraph.timer.startCounter();
