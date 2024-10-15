@@ -1,8 +1,9 @@
 export class Renderer {
-    constructor(paragraph, debug) {
+    constructor(paragraph, debug, options) {
         this.inputField = document.querySelector('.typing-field');
         this.paragraph = paragraph;
         this.debug = debug;
+        this.options = options;
 
         this.overlay = document.querySelector('.overlay');
         this.resultOverlay = document.querySelector('.result-overlay');
@@ -11,8 +12,9 @@ export class Renderer {
         this.accuracyOverlay = document.querySelector('.accuracy-overlay-value');
         this.errorsOverlay = document.querySelector('.errors-overlay-value');
 
-        this.currentWpmElement = document.querySelector('.current-wpm-text');
-        this.wordsTypedElement = document.querySelector('.words-typed-text');
+        this.currentWpmElementText = document.querySelector('.current-wpm-text');
+        this.wordsTypedElementText = document.querySelector('.words-typed-text');
+        this.timerElementText = document.querySelector('.timer-text');
 
         this.selectMenus = [
             {
@@ -29,6 +31,11 @@ export class Renderer {
                 selectValue: document.querySelector('.select-menu.word-count-select .select-value'),
                 optionsList: document.querySelector('.select-menu.word-count-select .options-list'),
                 listItems: document.querySelectorAll('.select-menu.word-count-select .options-list .option')
+            },
+            {
+                selectValue: document.querySelector('.select-menu.test-duration-select .select-value'),
+                optionsList: document.querySelector('.select-menu.test-duration-select .options-list'),
+                listItems: document.querySelectorAll('.select-menu.test-duration-select .options-list .option')
             },
         ];
 
@@ -50,11 +57,21 @@ export class Renderer {
     }
 
     updateCurrentWpm() {
-        this.currentWpmElement.innerHTML = `<span>WPM: </span>${this.paragraph.calculateWpm().toFixed(0)}`;
+        this.currentWpmElementText.innerHTML = `<span>WPM: </span>${this.paragraph.calculateWpm().toFixed(0)}`;
     }
 
     updateWordsTyped() {
-        this.wordsTypedElement.innerHTML = `${this.paragraph.countWords(this.paragraph.getPointer())}<span>/</span>${this.paragraph.countWords(this.paragraph.countChars() - 1)}`;
+        this.wordsTypedElementText.innerHTML = `${this.paragraph.countWords(this.paragraph.getPointer())}<span>/</span>${this.paragraph.countWords(this.paragraph.countChars() - 1)}`;
+    }
+
+    startCountdown() {
+        const countdown = this.options.getTestDuration({string: false});
+        this.paragraph.timer.startCountdown(countdown);
+        this.timerElementText.innerHTML = `${countdown}<span>s</span>`;
+    }
+    updateCountdown(countdown) {
+        // const countdown = this.paragraph.timer.getCountdown();
+        this.timerElementText.innerHTML = `${countdown}<span>s</span>`;
     }
 
     renderCharacter(char) {
@@ -100,5 +117,22 @@ export class Renderer {
 
     updateSelectValue(selectMenu, newSelectValue) {
         selectMenu.selectValue.querySelector('span').textContent = newSelectValue;
+    }
+    toggleSelectMenus() {
+        const wordCountSelect = this.selectMenus[2].selectValue.parentElement;
+        const testDurationSelect = this.selectMenus[3].selectValue.parentElement;
+        const timerElement = this.timerElementText.parentElement;
+        const wordsTypedElement = this.wordsTypedElementText.parentElement;
+        if (this.options.getTestType() == 'Timer') {
+            wordCountSelect.classList.add('inactive');
+            wordsTypedElement.classList.add('inactive');
+            testDurationSelect.classList.remove('inactive');
+            timerElement.classList.remove('inactive');
+        } else {
+            testDurationSelect.classList.add('inactive');
+            timerElement.classList.add('inactive');
+            wordCountSelect.classList.remove('inactive');
+            wordsTypedElement.classList.remove('inactive');
+        }
     }
 }

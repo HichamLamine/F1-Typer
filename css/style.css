@@ -16,7 +16,7 @@
     --error-color: #ff6b6b;
     --error-bg: #6a3131;
     --primary-fg: #fff;
-    --seconday-fg: #969696;
+    --secondary-fg: #969696;
 }
 
 body {
@@ -48,11 +48,11 @@ body {
 
 /* Character styling based on state */
 .char {
-    color: var(--seconday-fg);
+    color: var(--secondary-fg);
 }
 
 .char.highlighted {
-    text-decoration: underline;
+    text-decoration: underline var(--primary-color);
 }
 
 .char.wrong {
@@ -78,6 +78,7 @@ body {
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .result-overlay {
@@ -190,24 +191,37 @@ body {
 }
 
 .current-wpm,
-.words-typed {
+.words-typed,
+.timer {
     display: flex;
     align-items: center;
+    font-weight: 450;
+    color: var(--primary-color);
+}
+
+
+.words-typed.inactive,
+.timer.inactive {
+    display: none;
 }
 
 .words-typed {
-    gap: 5px
+    gap: 5px;
+}
+
+.timer {
+    gap: 3px
 }
 
 .current-wpm-text,
-.words-typed-text {
+.words-typed-text,
+.timer-text{
     color: var(--primary-fg);
 }
 
 .current-wpm-text span,
-.current-wpm,
 .words-typed-text span,
-.words-typed {
+.timer-text span {
     font-weight: 450;
     color: var(--primary-color);
 }
@@ -217,6 +231,7 @@ body {
     justify-content: center;
     gap: 10px;
 }
+
 .options-container select {
     /* width: 100px; */
     background-color: var(--secondary-bg);
@@ -224,6 +239,7 @@ body {
     border-radius: 20px;
     color: var(--primary-fg);
 }
+
 .options-container select option {
     border-radius: 20px;
 }
@@ -234,6 +250,10 @@ body {
     gap: 10px;
     margin-bottom: 1em;
     align-items: center;
+}
+
+.select-menu.inactive {
+    display: none;
 }
 
 .select-menu .select-value {

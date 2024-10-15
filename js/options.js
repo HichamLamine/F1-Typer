@@ -1,9 +1,10 @@
 export class Options {
     constructor() {
         this.frequency = 200;
-        this.testType = 'Word Count';
-        this.wordCount = 10;
-        this.testDuration = 30;
+        this.testType = 'Word count';
+        this.wordCount = 25;
+        this.testDuration = 15;
+        this.testCompleted = false;
     }
 
     getFrequency(option) {

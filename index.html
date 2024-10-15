@@ -76,7 +76,7 @@
             </div>
             <div class="select-menu test-type-select">
                 <div class="select-value">
-                    <span>Timer</span>
+                    <span>Word count</span>
                     <span class="material-icons">keyboard_arrow_down</span>
                 </div>
                 <ul class="options-list">
@@ -89,7 +89,7 @@
             </div>
             <div class="select-menu word-count-select">
                 <div class="select-value">
-                    <span>10 words</span>
+                    <span>25 words</span>
                     <span class="material-icons">keyboard_arrow_down</span>
                 </div>
                 <ul class="options-list">
@@ -106,14 +106,34 @@
                         <span>100 words</span>
                     </li>
             </div>
+
+            <div class="select-menu test-duration-select inactive">
+                <div class="select-value">
+                    <span>15s</span>
+                    <span class="material-icons">keyboard_arrow_down</span>
+                </div>
+                <ul class="options-list">
+                    <li class="option" value="15">
+                        <span>15s</span>
+                    </li>
+                    <li class="option" value="30">
+                        <span>30s</span>
+                    </li>
+                    <li class="option" value="60">
+                        <span>60s</span>
+                    </li>
+                    <li class="option" value="120">
+                        <span>120s</span>
+                    </li>
+            </div>
         </div>
 
 
-            <!-- <select class="test-duration-selct"> -->
-            <!--     <option value="15">15s</option> -->
-            <!--     <option value="30">30s</option> -->
-            <!--     <option value="60">60s</option> -->
-            <!-- </select> -->
+        <!-- <select class="test-duration-selct"> -->
+        <!--     <option value="15">15s</option> -->
+        <!--     <option value="30">30s</option> -->
+        <!--     <option value="60">60s</option> -->
+        <!-- </select> -->
         <div class="stats-container">
             <div class="current-wpm">
                 <span class="material-icons">bolt</span>
@@ -122,6 +142,10 @@
             <div class="words-typed">
                 <span class="material-icons">keyboard</span>
                 <h3 class="words-typed-text">0<span>/</span>25</h3>
+            </div>
+            <div class="timer inactive">
+                <span class="material-icons">timer</span>
+                <h3 class="timer-text">15<span>s</span></h3>
             </div>
         </div>
         <div class="typing-field"></div>

@@ -12,7 +12,7 @@ const wordsArray = wordProvider.getWords(25, 200);
 const debug = new Debug();
 const timer = new Timer();
 const paragraph = new Paragraph(wordsArray, timer);
-const renderer = new Renderer(paragraph, debug);
+const renderer = new Renderer(paragraph, debug, options);
 
 const eventHandler = new EventHandler(paragraph, renderer, wordProvider, options);
 eventHandler.addEventListeners();

@@ -8,7 +8,6 @@ export class EventHandler {
         this.wordProvider = wordProvider;
         this.nextBtn = document.querySelector('.next-btn');
         this.restartBtn = document.querySelector('.restart-btn');
-        this.testCompleted = false;
     }
 
     addEventListeners() {
@@ -27,11 +26,15 @@ export class EventHandler {
                             break;
 
                         case 1:
-                            this.options.setTestType(item.value);
-                        break
+                            this.options.setTestType(item.textContent.trim());
+                            this.renderer.toggleSelectMenus();
+                            break
                         case 2:
                             this.options.setWordCount(item.value);
-                        break
+                            break
+                        case 3:
+                            this.options.setTestDuration(item.value);
+                            break
                         default:
                             break;
                     }
@@ -50,20 +53,28 @@ export class EventHandler {
         });
 
         document.body.addEventListener('keydown', event => {
-            if (this.testCompleted) {
+            if (this.options.testCompleted) {
                 return;
             }
             // Start the timer upon first key hit
-            if (this.paragraph.pointer == 0) {
+            if (this.paragraph.pointer == 0 && this.options.getTestType() === 'Word count') {
                 this.paragraph.timer.startCounter();
                 // console.log(this.paragraph.countWords());
+            } else if (this.paragraph.pointer == 0 && this.options.getTestType() === 'Timer') {
+                this.paragraph.timer.startCounter();
+                this.paragraph.timer.startCountdown(this.options.getTestDuration({ string: false }), this.renderer, this.handleCompletedTimeTest);
             }
 
             // Update the wpm indicator on each word to avoid distraction
             if (event.code == 'Space') {
                 this.renderer.updateCurrentWpm();
+                console.log(this.paragraph.calculateWpm());
             }
             this.renderer.updateWordsTyped();
+            // if (this.paragraph.timer.getCountdown() === 0) {
+            //     this.resetTest({ repeat: false });
+            //     this.renderer.toggleOverlay();
+            // }
             // console.log(`${this.paragraph.countWords()} / ${this.paragraph.timer.getElapsedTime()}`);
 
             // Handle typing key events
@@ -77,9 +88,6 @@ export class EventHandler {
             }
 
             // Stop the timer when the last char is hit
-            if (this.paragraph.getPointer() + 1 === this.paragraph.countChars()) {
-                console.log(this.paragraph.timer.calculateWPM(this.paragraph.countWords()));
-            }
             // this.renderer.debug.logErrors(this.paragraph.getErrorCount());
             // this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
         });
@@ -97,12 +105,7 @@ export class EventHandler {
         // check if the char got rectified to decrement the error count
         this.paragraph.checkChar(pointer);
 
-        if (this.paragraph.getPointer() === this.paragraph.countChars() - 1) {
-            this.paragraph.timer.stopCounter();
-            this.renderer.updateOverlayValues();
-            this.renderer.toggleOverlay();
-            this.testCompleted = true;
-        }
+        this.handleCompletedWordTest();
 
         this.paragraph.incrementPointer();
     }
@@ -119,12 +122,7 @@ export class EventHandler {
         const wrongChar = this.paragraph.getChar(pointer);
         this.paragraph.pushError(pointer, wrongChar);
 
-        if (this.paragraph.getPointer() === this.paragraph.countChars() - 1) {
-            this.paragraph.timer.stopCounter();
-            this.renderer.updateOverlayValues();
-            this.renderer.toggleOverlay();
-            this.testCompleted = true;
-        }
+        this.handleCompletedWordTest();
 
         this.paragraph.incrementPointer();
     }
@@ -140,17 +138,30 @@ export class EventHandler {
         this.paragraph.decrementPointer();
     }
 
+    handleCompletedWordTest() {
+        if (this.paragraph.getPointer() === this.paragraph.countChars() - 1) {
+            this.paragraph.timer.stopCounter();
+            this.renderer.updateOverlayValues();
+            this.renderer.toggleOverlay();
+            this.options.testCompleted = true;
+        }
+    }
+
+
     resetTest(option) {
+        // console.log('called reset test ');
         let wordsArray = [];
 
         if (option.repeat) {
             wordsArray = this.paragraph.wordsArray;
-        } else {
+        } else if (this.options.getTestType() == 'Word count') {
             wordsArray = this.wordProvider.getWords(this.options.getWordCount({ string: false }), this.options.getFrequency({ string: false }));
+        } else {
+            wordsArray = this.wordProvider.getWords(this.options.getTestDuration({ string: false }) * 2, this.options.getFrequency({ string: false }));
         }
         // const timer = new Timer();
         this.paragraph = new Paragraph(wordsArray, this.paragraph.timer);
-        this.testCompleted = false;
+        this.options.testCompleted = false;
         // const debug = new Debug();
         this.renderer.updateParagraph(this.paragraph);
     }
