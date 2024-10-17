@@ -98,7 +98,6 @@ body {
 }
 
 .typing-field {
-    position: relative;
     background-color: var(--secondary-bg);
     max-width: 800px;
     margin-bottom: 1em;
@@ -109,7 +108,34 @@ body {
 
 .typing-indicator {
     position: absolute;
-    top: 0;
+    color: var(--primary-color);
+    transition: 150ms left, 150ms top;
+}
+
+.typing-indicator.animated {
+    animation-name: indicator-animation;
+    animation-delay: 500ms;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+.typing-indicator span {
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+@keyframes indicator-animation {
+    0% {
+        opacity: 100;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100;
+    }
 }
 
 /* Debug elements */
@@ -124,10 +150,7 @@ body {
     color: var(--secondary-fg);
 }
 
-.char.highlighted {
-    text-decoration: underline;
-    text-decoration-color: var(--primary-color);
-}
+.char.highlighted {}
 
 .char.wrong {
     color: var(--error-color);

@@ -5,6 +5,8 @@ export class Renderer {
         this.debug = debug;
         this.options = options;
 
+        this.typingIndicator = document.querySelector('.typing-indicator');
+
         this.overlay = document.querySelector('.overlay');
         this.resultOverlay = document.querySelector('.result-overlay');
         this.wpmOverlay = document.querySelector('.wpm-overlay-value');
@@ -44,6 +46,7 @@ export class Renderer {
 
         this.populateInputField();
         this.inputField.children[0].classList.add('highlighted');
+        this.updateIndicatorPosition();
 
         // this.debug.logCounter(this.paragraph.getPointer());
         // this.debug.logErrors(this.paragraph.getErrorCount());
@@ -57,6 +60,17 @@ export class Renderer {
         this.inputField.children[0].classList.add('highlighted');
     }
 
+    updateIndicatorPosition() {
+        if (this.paragraph.getPointer() == 0) {
+            this.typingIndicator.classList.add('animated');
+        } else {
+            this.typingIndicator.classList.remove('animated');
+        }
+        const currentChar = this.inputField.children[this.paragraph.getPointer()];
+        this.typingIndicator.style.top = `${currentChar.offsetTop - 5}px`;
+        this.typingIndicator.style.left = `${currentChar.offsetLeft - 4}px`;
+    }
+
     updateCurrentWpm() {
         this.currentWpmElementText.innerHTML = `<span>WPM: </span>${this.paragraph.calculateWpm().toFixed(0)}`;
     }
@@ -66,7 +80,7 @@ export class Renderer {
     }
 
     startCountdown() {
-        const countdown = this.options.getTestDuration({string: false});
+        const countdown = this.options.getTestDuration({ string: false });
         this.paragraph.timer.startCountdown(countdown);
         this.timerElementText.innerHTML = `${countdown}<span>s</span>`;
     }

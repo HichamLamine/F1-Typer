@@ -100,6 +100,7 @@ export class EventHandler {
                 this.handleWrongKey();
             }
 
+            this.renderer.updateIndicatorPosition();
             // Stop the timer when the last char is hit
             // this.renderer.debug.logErrors(this.paragraph.getErrorCount());
             // this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
@@ -177,6 +178,7 @@ export class EventHandler {
         this.options.testCompleted = false;
         // const debug = new Debug();
         this.renderer.updateParagraph(this.paragraph);
+        this.renderer.updateIndicatorPosition();
     }
 
 }
