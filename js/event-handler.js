@@ -28,6 +28,7 @@ export class EventHandler {
                         case 1:
                             this.options.setTestType(item.textContent.trim());
                             this.renderer.toggleSelectMenus();
+                            this.paragraph.timer.stopCountdown();
                             break
                         case 2:
                             this.options.setWordCount(item.value);
@@ -55,14 +56,16 @@ export class EventHandler {
 
         document.body.addEventListener('keydown', event => {
             if (event.ctrlKey && event.code === 'ArrowRight') {
-                this.resetTest({repeat: false});
+                this.resetTest({ repeat: false });
+                this.paragraph.timer.stopCountdown();
             } else if (event.ctrlKey && event.code === 'ArrowLeft') {
-                this.resetTest({repeat: true});
+                this.resetTest({ repeat: true });
+                this.paragraph.timer.stopCountdown();
             }
 
-                if (this.options.testCompleted || event.code == 'ControlLeft' || event.code === 'ArrowRight' || event.code === 'ArrowLeft') {
-                    return;
-                }
+            if (this.options.testCompleted || event.code == 'ControlLeft' || event.code === 'ArrowRight' || event.code === 'ArrowLeft') {
+                return;
+            }
 
             // make it so space changes wpm when actual pointer is in space not arbitrarily
 

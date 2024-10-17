@@ -5,6 +5,7 @@
     font-weight: 400;
 }
 
+
 :root {
     --primary-bg: #1e1e1e;
     --secondary-bg: #343436;
@@ -22,9 +23,74 @@
 body {
     background-color: var(--primary-bg);
     color: var(--primary-fg);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    /* column-gap: 1vw; */
+    justify-content: center;
+}
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    grid-column: 1/2;
+    min-height: 97vh;
+    border: var(--overlay-bg) 2px solid;
+    border-radius: 20px;
+    margin: 8px;
+    margin-right: 0;
+    background: var(--secondary-bg);
+    overflow: hidden;
+    text-wrap: nowrap;
+    /* transition: 1s transform; */
+    /* transition: 1s ease-in-out; */
+}
+
+.sidebar.collapsed {
+    width: 40px;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-item {
+    margin: 10px 5px;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 0.6em;
+    padding-right: 4.5em;
+    border-radius: 10px;
+}
+
+.sidebar-item.active {
+    background-color: var(--overlay-bg);
+    color: var(--primary-color);
+}
+
+.sidebar-item:hover {
+    color: var(--primary-color);
+}
+
+.bottom-sidebar {}
+
+.profile-sidebar {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 0.6em;
+    margin: 10px 5px;
+}
+
+.main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 3vw;
 }
 
 .main-header {
@@ -32,12 +98,18 @@ body {
 }
 
 .typing-field {
+    position: relative;
     background-color: var(--secondary-bg);
-    max-width: min(70vw, 800px);
+    max-width: 800px;
     margin-bottom: 1em;
     padding: 1em;
     font-size: 1.5rem;
     border-radius: 20px;
+}
+
+.typing-indicator {
+    position: absolute;
+    top: 0;
 }
 
 /* Debug elements */
@@ -50,7 +122,6 @@ body {
 /* Character styling based on state */
 .char {
     color: var(--secondary-fg);
-    transition: 1s text-decoration;
 }
 
 .char.highlighted {
@@ -142,6 +213,8 @@ body {
 
 .overlay-actions-container {
     grid-column: span 3;
+    display: flex;
+    gap: 10px;
     align-self: center;
     justify-self: center;
     align-items: center;
@@ -157,6 +230,7 @@ body {
     align-items: center;
     padding: 1em;
     background-color: var(--overlay-bg);
+    box-shadow: 1px 1px 2px var(--primary-bg);
     border-radius: 20px;
     border-width: 0;
     color: var(--primary-fg);
@@ -218,7 +292,7 @@ body {
 
 .current-wpm-text,
 .words-typed-text,
-.timer-text{
+.timer-text {
     color: var(--primary-fg);
 }
 
@@ -335,4 +409,19 @@ body {
 
 .shortcut-help .key .material-icons {
     font-size: 1rem;
+}
+
+@media(max-width:800px) {
+    body {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content {
+        grid-column: 1/2;
+    }
+
+    .sidebar {
+        display: none;
+        transform: translate(-200px, 0);
+    }
 }

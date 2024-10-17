@@ -15,149 +15,186 @@
 </head>
 
 <body>
-    <header class="main-header">
-        <h1 class="header-text">F1 TYPER</h1>
-    </header>
+    <div class="sidebar ">
+        <ul class="sidebar-list">
+            <li class="sidebar-item active">
+                <span class="material-icons">home</span>
+                <span>Home</span>
+            </li>
+            <li class="sidebar-item">
+                <span class="material-icons">group</span>
+                <span>Friends</span>
+            </li>
+            <li class="sidebar-item">
+                <span class="material-icons">groups</span>
+                <span>Multiplayer</span>
+            </li>
+            <li class="sidebar-item">
+                <span class="material-icons">code</span>
+                <span>Code typing</span>
+            </li>
+        </ul>
 
-    <section>
-        <div class="overlay"></div>
-        <div class="result-overlay">
-            <h1 class="wpm-score-overlay">You Scored <span class="wpm-overlay-value">71 WPM</span> !</h1>
-            <div class="duration-overlay">
-                <div class="duration-overlay-header">
-                    <span class="material-icons">schedule</span>
-                    <h2>Duration</h2>
-                </div>
-                <h1 class="duration-overlay-value">12s</h1>
-            </div>
-            <div class="accuracy-overlay">
-                <div class="accuracy-overlay-header">
-                    <span class="material-icons">location_searching</span>
-                    <h2>Accuracy</h2>
-                </div>
-                <h1 class="accuracy-overlay-value">92%</h1>
-            </div>
-            <div class="errors-overlay">
-                <div class="errors-overlay-header">
-                    <span class="material-icons">error</span>
-                    <h2>Errors</h2>
-                </div>
-                <h1 class="errors-overlay-value">3</h1>
-            </div>
-
-            <div class="overlay-actions-container">
-                <button class="next-btn">
-                    <span class="material-icons">arrow_forward</span>
-                    <h2 style="display: inline;">Next</h2>
-                </button>
-                <button class="restart-btn">
-                    <span class="material-icons">refresh</span>
-                    <h2 style="display: inline;">Restart</h2>
-                </button>
+        <div class="bottom-sidebar">
+            <div class="profile-sidebar">
+                <span class="material-icons">account_circle</span>
+                <span>Hicham</span>
             </div>
         </div>
+    </div>
 
-        <div class="options-container">
-            <div class="select-menu frequency-select">
-                <div class="select-value">
-                    <span>English 200</span>
-                    <span class="material-icons">keyboard_arrow_down</span>
-                </div>
-                <ul class="options-list">
-                    <li class="option" value="200">
+    <div class="main-content">
+
+        <header class="main-header">
+            <h1 class="header-text">F1 TYPER</h1>
+        </header>
+
+        <section>
+            <div class="options-container">
+                <div class="select-menu frequency-select">
+                    <div class="select-value">
                         <span>English 200</span>
-                    </li>
-                    <li class="option" value="500">
-                        <span>English 500</span>
-                    </li>
-                    <li class="option" value="1000">
-                        <span>English 1k</span>
-                    </li>
-            </div>
-            <div class="select-menu test-type-select">
-                <div class="select-value">
-                    <span>Word count</span>
-                    <span class="material-icons">keyboard_arrow_down</span>
+                        <span class="material-icons">keyboard_arrow_down</span>
+                    </div>
+                    <ul class="options-list">
+                        <li class="option" value="200">
+                            <span>English 200</span>
+                        </li>
+                        <li class="option" value="500">
+                            <span>English 500</span>
+                        </li>
+                        <li class="option" value="1000">
+                            <span>English 1k</span>
+                        </li>
                 </div>
-                <ul class="options-list">
-                    <li class="option" value="Timer">
-                        <span>Timer</span>
-                    </li>
-                    <li class="option" value="Word count">
+                <div class="select-menu test-type-select">
+                    <div class="select-value">
                         <span>Word count</span>
-                    </li>
-            </div>
-            <div class="select-menu word-count-select">
-                <div class="select-value">
-                    <span>25 words</span>
-                    <span class="material-icons">keyboard_arrow_down</span>
+                        <span class="material-icons">keyboard_arrow_down</span>
+                    </div>
+                    <ul class="options-list">
+                        <li class="option" value="Timer">
+                            <span>Timer</span>
+                        </li>
+                        <li class="option" value="Word count">
+                            <span>Word count</span>
+                        </li>
                 </div>
-                <ul class="options-list">
-                    <li class="option" value="10">
-                        <span>10 words</span>
-                    </li>
-                    <li class="option" value="25">
+                <div class="select-menu word-count-select">
+                    <div class="select-value">
                         <span>25 words</span>
-                    </li>
-                    <li class="option" value="50">
-                        <span>50 words</span>
-                    </li>
-                    <li class="option" value="100">
-                        <span>100 words</span>
-                    </li>
-            </div>
-
-            <div class="select-menu test-duration-select inactive">
-                <div class="select-value">
-                    <span>15s</span>
-                    <span class="material-icons">keyboard_arrow_down</span>
+                        <span class="material-icons">keyboard_arrow_down</span>
+                    </div>
+                    <ul class="options-list">
+                        <li class="option" value="10">
+                            <span>10 words</span>
+                        </li>
+                        <li class="option" value="25">
+                            <span>25 words</span>
+                        </li>
+                        <li class="option" value="50">
+                            <span>50 words</span>
+                        </li>
+                        <li class="option" value="100">
+                            <span>100 words</span>
+                        </li>
                 </div>
-                <ul class="options-list">
-                    <li class="option" value="15">
+
+                <div class="select-menu test-duration-select inactive">
+                    <div class="select-value">
                         <span>15s</span>
-                    </li>
-                    <li class="option" value="30">
-                        <span>30s</span>
-                    </li>
-                    <li class="option" value="60">
-                        <span>60s</span>
-                    </li>
-                    <li class="option" value="120">
-                        <span>120s</span>
-                    </li>
+                        <span class="material-icons">keyboard_arrow_down</span>
+                    </div>
+                    <ul class="options-list">
+                        <li class="option" value="15">
+                            <span>15s</span>
+                        </li>
+                        <li class="option" value="30">
+                            <span>30s</span>
+                        </li>
+                        <li class="option" value="60">
+                            <span>60s</span>
+                        </li>
+                        <li class="option" value="120">
+                            <span>120s</span>
+                        </li>
+                </div>
             </div>
+
+
+            <div class="stats-container">
+                <div class="current-wpm">
+                    <span class="material-icons">bolt</span>
+                    <h3 class="current-wpm-text"><span>WPM: </span>0</h3>
+                </div>
+                <div class="words-typed">
+                    <span class="material-icons">keyboard</span>
+                    <h3 class="words-typed-text">0<span>/</span>25</h3>
+                </div>
+                <div class="timer inactive">
+                    <span class="material-icons">timer</span>
+                    <h3 class="timer-text">15<span>s</span></h3>
+                </div>
+            </div>
+            <div class="typing-field">
+                <div class="typing-indicator">
+                </div>
+            </div>
+
+            <div class="shortcut-help-container">
+                <span class="shortcut-help">Press <span class="key">Ctrl + <span
+                            class="material-icons">arrow_forward</span>
+                    </span> to forward</span>
+                <span class="shortcut-help">Press <span class="key">Ctrl + <span
+                            class="material-icons">arrow_back</span>
+                    </span> to repeat</span>
+            </div>
+
+            <!-- <h1 class="pointer-counter">Pointer: </h1> -->
+            <!-- <h1 class="errors-counter">Errors: </h1> -->
+            <!-- <h1 class="current-wpm">WPM: </h1> -->
+            <!-- <h1 class="current-classes"></h1> -->
+
+        </section>
+    </div>
+
+    <div class="overlay"></div>
+    <div class="result-overlay">
+        <h1 class="wpm-score-overlay">You Scored <span class="wpm-overlay-value">71 WPM</span> !</h1>
+        <div class="duration-overlay">
+            <div class="duration-overlay-header">
+                <span class="material-icons">schedule</span>
+                <h2>Duration</h2>
+            </div>
+            <h1 class="duration-overlay-value">12s</h1>
+        </div>
+        <div class="accuracy-overlay">
+            <div class="accuracy-overlay-header">
+                <span class="material-icons">location_searching</span>
+                <h2>Accuracy</h2>
+            </div>
+            <h1 class="accuracy-overlay-value">92%</h1>
+        </div>
+        <div class="errors-overlay">
+            <div class="errors-overlay-header">
+                <span class="material-icons">error</span>
+                <h2>Errors</h2>
+            </div>
+            <h1 class="errors-overlay-value">3</h1>
         </div>
 
-
-        <div class="stats-container">
-            <div class="current-wpm">
-                <span class="material-icons">bolt</span>
-                <h3 class="current-wpm-text"><span>WPM: </span>0</h3>
-            </div>
-            <div class="words-typed">
-                <span class="material-icons">keyboard</span>
-                <h3 class="words-typed-text">0<span>/</span>25</h3>
-            </div>
-            <div class="timer inactive">
-                <span class="material-icons">timer</span>
-                <h3 class="timer-text">15<span>s</span></h3>
-            </div>
+        <div class="overlay-actions-container">
+            <button class="next-btn">
+                <span class="material-icons">arrow_forward</span>
+                <h2 style="display: inline;">Next</h2>
+            </button>
+            <button class="restart-btn">
+                <span class="material-icons">refresh</span>
+                <h2 style="display: inline;">Restart</h2>
+            </button>
         </div>
-        <div class="typing-field"></div>
+    </div>
 
-        <div class="shortcut-help-container">
-            <span class="shortcut-help">Press <span class="key">Ctrl + <span class="material-icons">arrow_forward</span>
-                </span> to forward</span>
-            <span class="shortcut-help">Press <span class="key">Ctrl + <span class="material-icons">arrow_back</span>
-                </span> to repeat</span>
-        </div>
-
-        <!-- <h1 class="pointer-counter">Pointer: </h1> -->
-        <!-- <h1 class="errors-counter">Errors: </h1> -->
-        <!-- <h1 class="current-wpm">WPM: </h1> -->
-        <!-- <h1 class="current-classes"></h1> -->
-
-    </section>
 
     <script type="module" src="js/main.js"></script>
 </body>
