@@ -5,6 +5,7 @@ import { Renderer } from './renderer.js';
 import { EventHandler } from './event-handler.js';
 import { WordProvider } from './word-provider.js';
 import { Options } from './options.js';
+import { SelectMenu } from './web-components/select-menu.js';
 
 const options = new Options();
 const wordProvider = new WordProvider();

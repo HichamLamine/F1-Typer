@@ -148,9 +148,10 @@ body {
 /* Character styling based on state */
 .char {
     color: var(--secondary-fg);
+    transition: 150ms;
 }
 
-.char.highlighted {}
+/* .char.highlighted {} */
 
 .char.wrong {
     color: var(--error-color);

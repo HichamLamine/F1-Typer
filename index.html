@@ -121,6 +121,10 @@
                 </div>
             </div>
 
+            <select-menu>
+                <span slot="select-value">English 200</span>
+                <li slot="options" class="option" value="200"><span>200</span></li>
+            </select-menu>
 
             <div class="stats-container">
                 <div class="current-wpm">
@@ -196,6 +200,82 @@
         </div>
     </div>
 
+
+    <template id="select-menu-template">
+        <style>
+            .select-menu {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 1em;
+                align-items: center;
+            }
+
+            .select-menu.inactive {
+                display: none;
+            }
+
+            .select-menu .select-value {
+                display: flex;
+                user-select: none;
+                padding: 0.4em 0.6em;
+                border-radius: 20px;
+                background-color: var(--secondary-bg);
+                border: var(--overlay-bg) 2px solid;
+                align-items: center;
+                justify-content: center;
+                min-width: 130px;
+                cursor: pointer;
+            }
+
+            .select-menu .select-value span.material-icons {
+                color: var(--primary-color);
+                transition: transform 300ms;
+            }
+
+            .select-menu .select-value.active span.material-icons {
+                transform: rotate(180deg);
+            }
+
+            .select-menu .options-list {
+                display: none;
+                position: absolute;
+                padding: 0.4em 0.6em;
+                border-radius: 20px;
+                background-color: var(--secondary-bg);
+                border: var(--overlay-bg) 2px solid;
+                box-shadow: 1px 1px 3px var(--primary-bg);
+                list-style: none;
+                line-height: 1.9em;
+                min-width: 130px;
+            }
+
+            .select-menu .options-list.active {
+                top: 124px;
+                display: block;
+            }
+
+            .select-menu .options-list .option {
+                user-select: none;
+                text-align: center;
+            }
+
+            .select-menu .options-list .option:hover {
+                color: var(--primary-color);
+                background-color: var(--overlay-btn-hover);
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        </style>
+        <div class="select-menu">
+            <div class="select-value">
+                <slot name="select-value"> <span>SELECT VALUE</span> </slot>
+                <span class="material-icons">keyboard_arrow_down</span>
+            </div>
+            <ul class="options-list">
+                <slot name="options"></slot>
+        </div>
+    </template>
 
     <script type="module" src="js/main.js"></script>
 </body>

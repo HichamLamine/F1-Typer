@@ -11,84 +11,41 @@ export class EventHandler {
     }
 
     addEventListeners() {
-        this.renderer.selectMenus.forEach((selectMenu, index) => {
-            selectMenu.selectValue.addEventListener('click', event => {
-                this.renderer.toggleSelectMenu(selectMenu);
-            });
-            selectMenu.listItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    this.renderer.toggleSelectMenu(selectMenu);
-                    this.renderer.updateSelectValue(selectMenu, item.textContent);
-
-                    switch (index) {
-                        case 0:
-                            this.options.setFrequency(item.value);
-                            break;
-
-                        case 1:
-                            this.options.setTestType(item.textContent.trim());
-                            this.renderer.toggleSelectMenus();
-                            this.paragraph.timer.stopCountdown();
-                            break
-                        case 2:
-                            this.options.setWordCount(item.value);
-                            break
-                        case 3:
-                            this.options.setTestDuration(item.value);
-                            this.paragraph.timer.stopCountdown();
-                            break
-                        default:
-                            break;
-                    }
-                    this.resetTest({ repeat: false });
-                });
-            });
-        });
-
-        this.nextBtn.addEventListener('click', event => {
-            this.resetTest({ repeat: false });
-            this.renderer.toggleOverlay();
-        });
-        this.restartBtn.addEventListener('click', event => {
-            this.resetTest({ repeat: true });
-            this.renderer.toggleOverlay();
-        });
-
+        this.handleSelectMenusEvents();
+        this.handleOverlayButtons();
         document.body.addEventListener('keydown', event => {
+
+            // handle ctrl + -> and ctrl + <- shortcuts
             if (event.ctrlKey && event.code === 'ArrowRight') {
                 this.resetTest({ repeat: false });
                 this.paragraph.timer.stopCountdown();
+                this.renderer.updatePageComponents();
             } else if (event.ctrlKey && event.code === 'ArrowLeft') {
                 this.resetTest({ repeat: true });
                 this.paragraph.timer.stopCountdown();
+                this.renderer.updatePageComponents();
             }
 
-            if (this.options.testCompleted || event.code == 'ControlLeft' || event.code === 'ArrowRight' || event.code === 'ArrowLeft') {
+            // Ignore certain keypresses such as ctrl, meta..
+            if (this.options.testCompleted || event.code == 'ControlLeft' || event.code === 'ArrowRight' || event.code === 'ArrowLeft' || event.code === 'MetaLeft') {
                 return;
             }
 
-            // make it so space changes wpm when actual pointer is in space not arbitrarily
-
-            // Start the timer upon first key hit
+            // Start the duration counter upon first key hit
             if (this.paragraph.pointer == 0 && this.options.getTestType() === 'Word count') {
                 this.paragraph.timer.startCounter();
-                // console.log(this.paragraph.countWords());
+
             } else if (this.paragraph.pointer == 0 && this.options.getTestType() === 'Timer') {
                 this.paragraph.timer.startCounter();
-                this.paragraph.timer.startCountdown(this.options.getTestDuration({ string: false }), this.renderer, this.handleCompletedTimeTest);
+                this.paragraph.timer.startCountdown(this.options.getTestDuration({ string: false }), this.renderer);
             }
 
             // Update the wpm indicator on each word to avoid distraction
-            if (event.code == 'Space') {
+            if (this.paragraph.getChar(this.paragraph.getPointer()) == ' ') {
                 this.renderer.updateCurrentWpm();
                 console.log(this.paragraph.calculateWpm());
             }
             this.renderer.updateWordsTyped();
-            // if (this.paragraph.timer.getCountdown() === 0) {
-            //     this.resetTest({ repeat: false });
-            //     this.renderer.toggleOverlay();
-            // }
-            // console.log(`${this.paragraph.countWords()} / ${this.paragraph.timer.getElapsedTime()}`);
 
             // Handle typing key events
             if (event.key === 'Backspace') {
@@ -101,9 +58,6 @@ export class EventHandler {
             }
 
             this.renderer.updateIndicatorPosition();
-            // Stop the timer when the last char is hit
-            // this.renderer.debug.logErrors(this.paragraph.getErrorCount());
-            // this.renderer.debug.logClasses(this.renderer.inputField.children[this.paragraph.getPointer()].classList);
         });
     }
 
@@ -161,6 +115,57 @@ export class EventHandler {
         }
     }
 
+    handleSelectMenusEvents() {
+        this.renderer.selectMenus.forEach((selectMenu, index) => {
+            selectMenu.selectValue.addEventListener('click', event => {
+                this.renderer.toggleSelectMenu(selectMenu);
+            });
+            selectMenu.listItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    this.renderer.toggleSelectMenu(selectMenu);
+                    this.renderer.updateSelectValue(selectMenu, item.textContent);
+
+                    switch (index) {
+                        case 0:
+                            this.options.setFrequency(item.value);
+                            break;
+
+                        case 1:
+                            this.options.setTestType(item.textContent.trim());
+                            this.renderer.toggleSelectMenus();
+                            this.paragraph.timer.stopCountdown();
+                            break
+                        case 2:
+                            this.options.setWordCount(item.value);
+                            this.renderer.updateWordsTyped();
+                            break
+                        case 3:
+                            this.options.setTestDuration(item.value);
+                            this.paragraph.timer.stopCountdown();
+                            this.renderer.updateCountdown();
+                            break
+                        default:
+                            break;
+                    }
+                    this.resetTest({ repeat: false });
+                });
+            });
+        });
+    }
+
+    handleOverlayButtons() {
+        this.nextBtn.addEventListener('click', event => {
+            this.resetTest({ repeat: false });
+            this.renderer.updatePageComponents();
+            this.renderer.toggleOverlay();
+        });
+        this.restartBtn.addEventListener('click', event => {
+            this.resetTest({ repeat: true });
+            this.renderer.updatePageComponents();
+            this.renderer.toggleOverlay();
+        });
+
+    }
 
     resetTest(option) {
         // console.log('called reset test ');

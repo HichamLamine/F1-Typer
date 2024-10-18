@@ -48,9 +48,6 @@ export class Renderer {
         this.inputField.children[0].classList.add('highlighted');
         this.updateIndicatorPosition();
 
-        // this.debug.logCounter(this.paragraph.getPointer());
-        // this.debug.logErrors(this.paragraph.getErrorCount());
-        // this.debug.logClasses(this.inputField.children[this.paragraph.getPointer()].classList);
     }
 
     updateParagraph(paragraph) {
@@ -72,21 +69,34 @@ export class Renderer {
     }
 
     updateCurrentWpm() {
-        this.currentWpmElementText.innerHTML = `<span>WPM: </span>${this.paragraph.calculateWpm().toFixed(0)}`;
+        if (this.paragraph.getPointer() === 0) {
+            this.currentWpmElementText.innerHTML = `<span>WPM: </span>0`;
+        } else {
+            this.currentWpmElementText.innerHTML = `<span>WPM: </span>${this.paragraph.calculateWpm().toFixed(0)}`;
+        }
     }
 
     updateWordsTyped() {
-        this.wordsTypedElementText.innerHTML = `${this.paragraph.countWords(this.paragraph.getPointer())}<span>/</span>${this.paragraph.countWords(this.paragraph.countChars() - 1)}`;
+        if (this.paragraph.getPointer() === 0) {
+            this.wordsTypedElementText.innerHTML = `0<span>/</span>${this.options.getWordCount({string: false})}`;
+        }
+        else {
+            this.wordsTypedElementText.innerHTML = `${this.paragraph.countWords(this.paragraph.getPointer())}<span>/</span>${this.options.getWordCount({string: false})}`;
+        }
     }
 
-    startCountdown() {
-        const countdown = this.options.getTestDuration({ string: false });
-        this.paragraph.timer.startCountdown(countdown);
-        this.timerElementText.innerHTML = `${countdown}<span>s</span>`;
-    }
     updateCountdown(countdown) {
-        // const countdown = this.paragraph.timer.getCountdown();
-        this.timerElementText.innerHTML = `${countdown}<span>s</span>`;
+        if (this.paragraph.getPointer() === 0) {
+            this.timerElementText.innerHTML = `${this.options.getTestDuration({ string: false })}<span>s</span>`;
+        } else {
+            this.timerElementText.innerHTML = `${countdown}<span>s</span>`;
+        }
+    }
+
+    updatePageComponents() {
+        this.updateCurrentWpm();
+        this.updateWordsTyped();
+        this.updateCountdown();
     }
 
     renderCharacter(char) {

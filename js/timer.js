@@ -28,7 +28,7 @@ export class Timer {
         return readableDuration;
     }
 
-    startCountdown(countdown, renderer, handleCompletedTimeTestCallback) {
+    startCountdown(countdown, renderer) {
         this.countdown = countdown;
         this.countdownId = setInterval(() => {
             this.countdown--;
