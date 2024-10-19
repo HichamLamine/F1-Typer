@@ -29,6 +29,43 @@ body {
     justify-content: center;
 }
 
+.authentication-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    background: var(--secondary-bg);
+    padding: 1em;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-type {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.auth-button {
+    border-width: 0;
+    color: var(--primary-fg);
+    font-size: 1rem;
+    padding: 1em;
+    border-radius: 10px;
+    background: var(--overlay-bg);
+}
+
+.form-container input {
+    border-width: 0;
+    padding: 0.5em;
+    border-radius: 10px;
+    color: var(--primary-fg);
+    background: var(--overlay-bg);
+}
 
 .sidebar {
     display: flex;
